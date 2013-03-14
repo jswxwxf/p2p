@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Context antiJARLocking="true">
+
+	<Resource name="jdbc/p2p" auth="Container" type="javax.sql.DataSource"
+		url="jdbc:h2:mem:prosh;DB_CLOSE_DELAY=-1" username="sa" password=""
+		driverClassName="org.h2.Driver" />
+
+</Context>

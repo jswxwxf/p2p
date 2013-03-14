@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,6 +18,9 @@ import org.springframework.web.client.RestTemplate;
 import org.springframework.web.context.request.RequestAttributes;
 import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.HandlerMapping;
+
+import com.hp.p2p.domain.CallLog;
+import com.hp.p2p.repository.CallLogRepository;
 
 /**
  * @author wangxif
@@ -29,8 +33,11 @@ public class P2PInController {
 	@Autowired
 	private RestTemplate restTemplate;
 	
+	@Autowired
+	private CallLogRepository callLogRepository;
+	
 	@RequestMapping(value = "/**", method = RequestMethod.GET)
-	public @ResponseBody Object get(WebRequest request) {
+	public @ResponseBody Object get(WebRequest request, HttpEntity<byte[]> requestEntity) {
 		String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 		path = path.substring("/p2p/in".length());
 		if (this.allow(path)) {

@@ -8,6 +8,10 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
+import org.springframework.http.HttpHeaders;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,9 +33,14 @@ public class P2POutController {
 	private RestTemplate restTemplate;
 
 	@RequestMapping(value = "/**", method = RequestMethod.GET)
-	public @ResponseBody Object get(WebRequest request) {
+	public ResponseEntity<Object> get(WebRequest request, HttpEntity<byte[]> requestEntity) {
 		String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
-		return restTemplate.getForObject("http://localhost:8080/p2pin/p2p/in" + path + "?" + buildQueryString(request), Object.class, extractParameters(request));
+		HttpHeaders headers = new HttpHeaders();
+		headers.putAll(requestEntity.getHeaders());
+		headers.add("testhead", "testvalue");
+		HttpEntity<byte[]> newRequest = new HttpEntity<byte[]>(null, headers);
+		return restTemplate.exchange("http://localhost:8080/p2pin/p2p/in" + path + "?" + buildQueryString(request), HttpMethod.GET, newRequest, Object.class, extractParameters(request));
+//		return restTemplate.getForObject("http://localhost:8080/p2pin/p2p/in" + path + "?" + buildQueryString(request), Object.class, extractParameters(request));
 	}
 	
 	@RequestMapping(value = "/**", method = RequestMethod.POST)
