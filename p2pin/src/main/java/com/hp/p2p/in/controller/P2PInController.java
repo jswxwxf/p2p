@@ -8,6 +8,7 @@ import java.util.Iterator;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -30,7 +31,7 @@ public class P2PInController {
 	private RestTemplate restTemplate;
 	
 	@RequestMapping(value = "/**", method = RequestMethod.GET)
-	public @ResponseBody Object get(WebRequest request) {
+	public @ResponseBody Object get(WebRequest request, HttpEntity<byte[]> requestEntity) {
 		String path = (String) request.getAttribute(HandlerMapping.PATH_WITHIN_HANDLER_MAPPING_ATTRIBUTE, RequestAttributes.SCOPE_REQUEST);
 		path = path.substring("/p2p/in".length());
 		if (this.allow(path)) {
