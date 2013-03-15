@@ -26,7 +26,6 @@ import org.springframework.web.servlet.HandlerMapping;
  * @author wangxif
  *
  */
-@Controller
 public class P2POutController {
 	
 	@Autowired
