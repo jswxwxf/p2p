@@ -11,19 +11,7 @@
 		<context:include-filter type="annotation"
 			expression="org.springframework.stereotype.Controller" />
 	</context:component-scan>
-	
-	<!-- Enables the Spring MVC @Controller programming model -->
-	<mvc:annotation-driven>
-		<mvc:message-converters>
-			<bean class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-		</mvc:message-converters>
-	</mvc:annotation-driven>
-	
-	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate">
-		<property name="messageConverters">
-			<bean
-				class="org.springframework.http.converter.json.MappingJacksonHttpMessageConverter" />
-		</property>
-	</bean>
+
+	<bean id="restTemplate" class="org.springframework.web.client.RestTemplate" />
 
 </beans>
